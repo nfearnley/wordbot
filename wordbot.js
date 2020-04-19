@@ -10,8 +10,7 @@ const Eris = require("eris");
 var token = require("./token.json");
 var bot = new Eris.CommandClient(token, {}, {
     description: "Word of the Day bot",
-    owner: "Natalie Fearnley",
-    prefix: "."
+    owner: "Natalie Fearnley"
 });
 
 bot.on("ready", async function() {
