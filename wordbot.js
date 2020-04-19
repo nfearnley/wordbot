@@ -26,7 +26,7 @@ bot.on("error", async function(err) {
     console.error("WordBot ERROR", err);
 });
 
-var modules = ["about", "word"];
+var modules = ["about", "admin", "word"];
 modules.forEach(function(name) {
     var module = require("./modules/" + name);
     module.setup(bot);
