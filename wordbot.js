@@ -5,30 +5,41 @@ process.on("unhandledRejection", (err, promise) => {
     console.error(err ? err.stack : promise);
 });
 
+const mongoose = require("mongoose");
 const Eris = require("eris");
 
-var token = require("./token.json");
-var bot = new Eris.CommandClient(token, {}, {
-    description: "Word of the Day bot",
-    owner: "Natalie Fearnley"
-});
+async function main() {
+    await mongoose.connect("mongodb://localhost/wordbot", { useNewUrlParser: true, useUnifiedTopology: true })
+        .catch(function(err) {
+            console.error("connection error:", err);
+            throw err;
+        });
 
-bot.on("ready", async function() {
-    console.log("WordBot is ready");
-});
+    var token = require("./token.json");
+    var bot = new Eris.CommandClient(token, {}, {
+        description: "Word of the Day bot",
+        owner: "Natalie Fearnley"
+    });
 
-bot.on("warn", async function(message) {
-    console.warn("WordBot WARN", message);
-});
+    bot.on("ready", async function() {
+        console.log("WordBot is ready");
+    });
 
-bot.on("error", async function(err) {
-    console.error("WordBot ERROR", err);
-});
+    bot.on("warn", async function(message) {
+        console.warn("WordBot WARN", message);
+    });
 
-var modules = ["about", "admin", "word"];
-modules.forEach(function(name) {
-    var module = require("./modules/" + name);
-    module.setup(bot);
-});
+    bot.on("error", async function(err) {
+        console.error("WordBot ERROR", err);
+    });
 
-bot.connect();
+    var modules = ["about", "admin", "word"];
+    modules.forEach(function(name) {
+        var module = require("./modules/" + name);
+        module.setup(bot);
+    });
+
+    bot.connect();
+}
+
+main();

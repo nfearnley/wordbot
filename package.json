@@ -10,6 +10,7 @@
     "eris": "^0.11.2",
     "got": "^10.7.0",
     "moment": "^2.24.0",
+    "mongoose": "^5.9.9",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
