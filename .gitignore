@@ -1,0 +1,10 @@
+node_modules
+package-lock.json
+
+.vscode
+.vs
+.env
+*.sln
+*.njsproj
+*.code-workspace
+/token.json
