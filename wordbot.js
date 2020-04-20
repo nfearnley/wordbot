@@ -13,15 +13,16 @@ process.on("unhandledRejection", (err, promise) => {
 async function main() {
     console.debug("Starting...");
 
+    console.debug("Connecting to MongoDB...");
     try {
         await mongoose.connect("mongodb://localhost/wordbot", { useNewUrlParser: true, useUnifiedTopology: true });
     }
     catch(err) {
-        console.error("connection error:", err);
+        console.error("Error connecting to MongoDB:", err);
         throw err;
     }
 
-    console.debug("Connected to mongodb");
+    console.debug("Connected to MongoDB");
 
     var token = (await fs.readFile("./token.txt", "utf8")).trim();
     var bot = new Eris.CommandClient(token, {}, {
