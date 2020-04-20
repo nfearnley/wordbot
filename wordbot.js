@@ -53,4 +53,7 @@ async function main() {
     bot.connect();
 }
 
-main();
+main()
+    .catch(function(err) {
+        console.error("Unhandled Error: ", err);
+    });
