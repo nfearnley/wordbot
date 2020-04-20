@@ -7,4 +7,5 @@ package-lock.json
 *.sln
 *.njsproj
 *.code-workspace
-/token.json
+
+/token.txt

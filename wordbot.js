@@ -1,21 +1,25 @@
 "use strict";
 
+const fs = require("fs").promises;
+
+const mongoose = require("mongoose");
+const Eris = require("eris");
+
 process.on("unhandledRejection", (err, promise) => {
     console.error("== Node detected an unhandled rejection! ==");
     console.error(err ? err.stack : promise);
 });
 
-const mongoose = require("mongoose");
-const Eris = require("eris");
-
 async function main() {
-    await mongoose.connect("mongodb://localhost/wordbot", { useNewUrlParser: true, useUnifiedTopology: true })
-        .catch(function(err) {
-            console.error("connection error:", err);
-            throw err;
-        });
+    try {
+        await mongoose.connect("mongodb://localhost/wordbot", { useNewUrlParser: true, useUnifiedTopology: true });
+    }
+    catch(err) {
+        console.error("connection error:", err);
+        throw err;
+    }
 
-    var token = require("./token.json");
+    var token = await fs.readFile("./token.txt");
     var bot = new Eris.CommandClient(token, {}, {
         description: "Word of the Day bot",
         owner: "Natalie Fearnley"
