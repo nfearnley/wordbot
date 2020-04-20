@@ -11,6 +11,8 @@ process.on("unhandledRejection", (err, promise) => {
 });
 
 async function main() {
+    console.debug("Starting...");
+
     try {
         await mongoose.connect("mongodb://localhost/wordbot", { useNewUrlParser: true, useUnifiedTopology: true });
     }
@@ -19,7 +21,9 @@ async function main() {
         throw err;
     }
 
-    var token = await fs.readFile("./token.txt");
+    console.debug("Connected to mongodb");
+
+    var token = (await fs.readFile("./token.txt", "utf8")).trim();
     var bot = new Eris.CommandClient(token, {}, {
         description: "Word of the Day bot",
         owner: "Natalie Fearnley"
@@ -42,6 +46,8 @@ async function main() {
         var module = require("./modules/" + name);
         module.setup(bot);
     });
+
+    console.debug("Connecting to discord...");
 
     bot.connect();
 }
